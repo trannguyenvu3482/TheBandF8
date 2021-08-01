@@ -8,6 +8,7 @@
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/35/Simple_Music.svg" type="image/x-icon"/>
     <link rel="stylesheet" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/font/themify-icons/themify-icons.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
 </head>
 <body>
     <div id="main">
@@ -35,6 +36,10 @@
             <!-- Begin: Search Button  -->
             <div class="search-btn">
                 <i class="search-icon ti-search"></i>
+            </div>
+
+            <div class="mobile-menu-btn js-mobile-menu-btn">
+              <i class="menu-icon ti-menu"></i>
             </div>
             <!-- End: Search Button  -->
         </div>
@@ -216,7 +221,11 @@
     const modal = document.querySelector('.js-modal')
     const modalClose = document.querySelector('.js-modal-close')
     const modalContainer = document.querySelector('.js-modal-container')
-
+    const headerElement = document.querySelector('#header')
+    const mobileMenu = document.querySelector('.js-mobile-menu-btn')
+    var headerHeight = header.clientHeight 
+    
+    
     // Hàm hiển thị modal mua vé (thêm class open vào modal)
     function showBuyTickets() {
         modal.classList.add('open')
@@ -228,6 +237,14 @@
         modal.classList.remove('open')
     }
 
+    // Hàm mở mobile menu
+    function openMenu() {
+      var isClosed = header.clientHeight === headerHeight;
+      if (isClosed) {
+        header.style.height = 'auto'
+      } else header.style.height = null;
+    }
+    
     // Lặp qua từng thẻ button và nghe hành vi click
     for (const buyBtn of buyBtns) {
         buyBtn.addEventListener('click', showBuyTickets)
@@ -241,6 +258,19 @@
     modalContainer.addEventListener('click', function(event){
         event.stopPropagation()
     })
+
+    // Nghe hành vi click vào nút mobile menu
+    mobileMenu.addEventListener('click', openMenu)
+
+    // Tự động đóng khi chọn menu
+    var menuItems = document.querySelectorAll('#nav li a[href*="#"]')
+    for (var i = 0; i < menuItems.length; i++) {
+      var menuItem = menuItems[i];
+      
+      menuItem.onclick = function() {
+        header.style.height = null;
+      }
+    }
     </script>
 </body>
 </html>
